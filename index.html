@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Project</title>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="base.css">
+		<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+	</head>
+	<body>
+	<div class="main">
+		<div class="card">
+			<div class="card-body">
+				<h4>Controls</h4>
+				<button class="btn btn-sm btn-primary" id="timeUnitButton">
+					SET TIME UNIT</button>
+					<div class="timeUnitContainer">
+						<b>Unit of Time (Years/Months/etc.):</b> <input type="text"
+						 name="timeUnitText" id="timeUnitInput">
+						 <button onclick= "setTimeUnit(timeUnitInput)"
+						 	id="timeUnitSubmit">Submit</button>
+					</div>
+			</div>
+		</div>
+		<br />
+		<div class="row" id="timeline">
+			<table class="table table-bordered" style="border-collapse:collapse;">
+				<tr class="row1">
+					<td class="col1 col-timeline" id="col-left" data-timeUnit="Years"></td>
+					<td class="col2" style="text-align:center;">o</td>
+					<td class="col3 col-timeline" id="col-right" data-timeUnit="Years"></td>
+				</tr>
+		</div>
+	</div>
+    <script src="jquery.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="base.js"></script>
+  </body>
+</html>
