@@ -10,23 +10,40 @@
 	<div class="main">
 		<div class="card">
 			<div class="card-body">
-				<h4>Controls</h4>
+				<h4>Main</h4>
 				<button class="btn btn-sm btn-primary" id="timeUnitButton">
 					SET TIME UNIT</button>
 					<div class="timeUnitContainer">
 						<b>Unit of Time (Years/Months/etc.):</b> <input type="text"
-						 name="timeUnitText" id="timeUnitInput">
-						 <button onclick= "setTimeUnit(timeUnitInput)"
-						 	id="timeUnitSubmit">Submit</button>
+						 name="timeUnitText" id="timeUnitInput" value="Years">
+						 <button onclick="setTimeUnit(timeUnitInput)"
+						 	id="timeUnitSubmit">Set</button>
+					</div>
+					<button class="btn btn-sm btn-primary" id="addEventButton">
+					ADD EVENT</button>
+					<div class="addEventContainer">
+						<b>Event Name:</b> <input type="text" name="eventName" id="eventNameInput">
+						<br>
+						<b>Event Time:</b> <input type="text" name="eventTimeAmount"
+							 id="eventTimeInput" value="How many ">
+						<br>
+						<b>Where to place the event?</b>
+						<br>
+						<input type="radio" name="leftRight" id="leftRightLeft" value="left">
+						Left Column<br>
+						<input type="radio" name="leftRight" value="right">Right Column<br>
+						<br>
+						<button onclick="addEvent(eventNameInput)" id="addEventSubmit">Add</button>
 					</div>
 			</div>
 		</div>
 		<br />
 		<div class="row" id="timeline">
-			<table class="table table-bordered" style="border-collapse:collapse;">
+			<table class="table table-bordered" style="border-collapse:collapse;"
+			id ="table1">
 				<tr class="row1">
 					<td class="col1 col-timeline" id="col-left" data-timeUnit="Years"></td>
-					<td class="col2" style="text-align:center;">o</td>
+					<td class="col2" style="text-align:center;"></td>
 					<td class="col3 col-timeline" id="col-right" data-timeUnit="Years"></td>
 				</tr>
 		</div>

@@ -6,3 +6,11 @@
 .timeUnitContainer {
 	display:none;
 }
+
+.addEventContainer {
+	display:none;
+}
+
+td {
+	text-align: center;
+}
