@@ -1,0 +1,16 @@
+.main {
+	max-width:800px;
+	margin:auto;
+}
+
+.timeUnitContainer {
+	display:none;
+}
+
+.addEventContainer {
+	display:none;
+}
+
+td {
+	text-align: center;
+}
