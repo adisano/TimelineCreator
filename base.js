@@ -13,23 +13,18 @@ var setTimeUnit = function(timeUnit){
 			$("#timeUnitInput").val() + "?");
 }
 
-<<<<<<< HEAD
 //checks input fields for valid input, alerts user if necessary, otherwise
 //adds new events to the timeline in descending chronological order
 var checkFields = function(){
-=======
 //adds new events to the timeline in descending chronological order
 var addEvent = function(eventName){
->>>>>>> 0dd3b172626d1265bf9700cf8c65f93f718f60a3
 	//check that the user has typed a valid integer into the "Event Time" textbox
 	if ($.isNumeric($("#eventTimeInput").val()))
 	{
 	//if so, check that the event name is not blank (or equal to the alert)
 		if (!$.isEmptyObject($("#eventNameInput").val()) && $("#eventNameInput").val() !== "Enter a Name!"){
 		//if not, start creating the event
-<<<<<<< HEAD
 		addEvent(eventName)
-=======
 		var table = document.getElementById("table1");
 		//create a new row to contain the event
 		var row = table.insertRow(-1);
@@ -52,7 +47,6 @@ var addEvent = function(eventName){
 		}
 		//lol fill this with something reasonable later
 		cell2.innerHTML = "o";
->>>>>>> 0dd3b172626d1265bf9700cf8c65f93f718f60a3
 		}
 		else if ($.isEmptyObject($("#eventNameInput").val())){
 			//if so, alert the user to create a name
@@ -74,7 +68,6 @@ var addEvent = function(eventName){
 	}
 }
 
-<<<<<<< HEAD
 var addEvent = function(eventName){
 	var table = document.getElementById("table1");
 	//create a new row to contain the event
@@ -103,8 +96,6 @@ var addRow = function(cell, eventname){
 	 + $("#timeUnitInput").val();
 }
 
-=======
->>>>>>> 0dd3b172626d1265bf9700cf8c65f93f718f60a3
 $(document).ready(function(){
 //allow users to open and close the "custom unit of time" selection menu
 	$("#timeUnitButton").click(function(){
