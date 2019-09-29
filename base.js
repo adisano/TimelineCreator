@@ -16,8 +16,6 @@ var setTimeUnit = function(timeUnit){
 //checks input fields for valid input, alerts user if necessary, otherwise
 //adds new events to the timeline in descending chronological order
 var checkFields = function(){
-//adds new events to the timeline in descending chronological order
-var addEvent = function(eventName){
 	//check that the user has typed a valid integer into the "Event Time" textbox
 	if ($.isNumeric($("#eventTimeInput").val()))
 	{
@@ -25,28 +23,6 @@ var addEvent = function(eventName){
 		if (!$.isEmptyObject($("#eventNameInput").val()) && $("#eventNameInput").val() !== "Enter a Name!"){
 		//if not, start creating the event
 		addEvent(eventName)
-		var table = document.getElementById("table1");
-		//create a new row to contain the event
-		var row = table.insertRow(-1);
-		var cell1 = row.insertCell(0);
-		var cell2 = row.insertCell(1);
-		var cell3 = row.insertCell(2);
-		//if "Left" checked, insert event on the left column
-		if(document.getElementById("leftRightLeft").checked){
-			//should read like: "Event Name - x Unit of Time"
-			cell1.innerHTML = eventName.value
-			+ " - " + $("#eventTimeInput").val() + " "
-			 + $("#timeUnitInput").val();
-		}
-		//or insert on the right
-		else if(!document.getElementById("leftRightLeft").checked){
-			//should read like: "Event Name - x Unit of Time"
-			cell1.innerHTML = eventName.value
-			+ " - " + $("#eventTimeInput").val() + " "
-			 + $("#timeUnitInput").val();
-		}
-		//lol fill this with something reasonable later
-		cell2.innerHTML = "o";
 		}
 		else if ($.isEmptyObject($("#eventNameInput").val())){
 			//if so, alert the user to create a name
