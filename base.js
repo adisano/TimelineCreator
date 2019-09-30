@@ -21,12 +21,8 @@ var addEvent = function(eventName){
 	//if so, check that the event name is not blank (or equal to the alert)
 		if (!$.isEmptyObject($("#eventNameInput").val()) && $("#eventNameInput").val() !== "Enter a Name!"){
 		//if not, start creating the event
-		var table = document.getElementById("table1");
 		//create a new row to contain the event
-		var row = table.insertRow(-1);
-		var cell1 = row.insertCell(0);
-		var cell2 = row.insertCell(1);
-		var cell3 = row.insertCell(2);
+		createRow();
 		//if "Left" checked, insert event on the left column
 		if(document.getElementById("leftRightLeft").checked){
 			//should read like: "Event Name - x Unit of Time"
@@ -37,7 +33,7 @@ var addEvent = function(eventName){
 		//or insert on the right
 		else if(!document.getElementById("leftRightLeft").checked){
 			//should read like: "Event Name - x Unit of Time"
-			cell1.innerHTML = eventName.value
+			cell3.innerHTML = eventName.value
 			+ " - " + $("#eventTimeInput").val() + " "
 			 + $("#timeUnitInput").val();
 		}
@@ -62,6 +58,20 @@ var addEvent = function(eventName){
 	{
 		alert ("There has been an error! We can't figure out if this is a number or not! Since we're suspicious you may be some kind of 4th-dimensional Eldritch being, please get in contact with the creator of this program immediately and smooch her!");
 	}
+}
+
+var createRow = function(){
+	var table = document.getElementById("table1");
+	var row = table.insertRow(-1);
+	row.id = "row" + $(".col1").attr("data-rowAmount");
+	alert(row.id);
+	var cell1 = row.insertCell(0);
+	var cell2 = row.insertCell(1);
+	var cell3 = row.insertCell(2);
+}
+
+var sortEvents = function(){
+
 }
 
 $(document).ready(function(){
