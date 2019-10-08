@@ -13,32 +13,16 @@ var setTimeUnit = function(timeUnit){
 			$("#timeUnitInput").val() + "?");
 }
 
+//checks input fields for valid input, alerts user if necessary, otherwise
 //adds new events to the timeline in descending chronological order
-var addEvent = function(eventName){
+var checkFields = function(eventname){
 	//check that the user has typed a valid integer into the "Event Time" textbox
 	if ($.isNumeric($("#eventTimeInput").val()))
 	{
 	//if so, check that the event name is not blank (or equal to the alert)
 		if (!$.isEmptyObject($("#eventNameInput").val()) && $("#eventNameInput").val() !== "Enter a Name!"){
 		//if not, start creating the event
-		//create a new row to contain the event
-		createRow();
-		//if "Left" checked, insert event on the left column
-		if(document.getElementById("leftRightLeft").checked){
-			//should read like: "Event Name - x Unit of Time"
-			cell1.innerHTML = eventName.value
-			+ " - " + $("#eventTimeInput").val() + " "
-			 + $("#timeUnitInput").val();
-		}
-		//or insert on the right
-		else if(!document.getElementById("leftRightLeft").checked){
-			//should read like: "Event Name - x Unit of Time"
-			cell3.innerHTML = eventName.value
-			+ " - " + $("#eventTimeInput").val() + " "
-			 + $("#timeUnitInput").val();
-		}
-		//lol fill this with something reasonable later
-		cell2.innerHTML = "o";
+		addEvent(eventname)
 		}
 		else if ($.isEmptyObject($("#eventNameInput").val())){
 			//if so, alert the user to create a name
@@ -60,18 +44,61 @@ var addEvent = function(eventName){
 	}
 }
 
-var createRow = function(){
+var cellOrderArray = new Array();
+
+var addEvent = function(eventName){
 	var table = document.getElementById("table1");
+	//create a new row to contain the event
 	var row = table.insertRow(-1);
-	row.id = "row" + $(".col1").attr("data-rowAmount");
-	alert(row.id);
 	var cell1 = row.insertCell(0);
 	var cell2 = row.insertCell(1);
 	var cell3 = row.insertCell(2);
+	//if "Left" checked, insert event on the left column
+	if(document.getElementById("leftRightLeft").checked){
+		cellOrderArray.push(cell1);
+		//should read like: "Event Name - x Unit of Time"
+		addRow(cell1, eventName);
+	}
+	//or insert on the right
+	else if(!document.getElementById("leftRightLeft").checked){
+		cellOrderArray.push(cell3);
+		//should read like: "Event Name - x Unit of Time"
+		addRow(cell3, eventName);
+	}
+	//placeholder text
+	//indicates the center of the timeline
+	cell2.innerHTML = "o";
 }
 
-var sortEvents = function(){
+var eventOrderArray = new Array();
 
+var addRow = function(cell, eventname){
+	cell.innerHTML = eventname.value
+	+ " - " + $("#eventTimeInput").val() + " "
+	 + $("#timeUnitInput").val();
+	 eventOrderArray.push($("#eventTimeInput").val());
+	 orderEvents();
+}
+
+//re-orders event text in ascending order based on the eventTimeInput value
+var orderEvents = function(){
+	var i;
+	var x;
+	var temp;
+	if (eventOrderArray.length >= 2){
+		for (i = eventOrderArray.length; i > 1; i--) {
+ 			x = i - 1;
+			if (Number(eventOrderArray[i]) < Number(eventOrderArray[x])){
+				temp = eventOrderArray[x];
+				eventOrderArray[x] = eventOrderArray[i];
+				eventOrderArray[i] = temp;
+				temp = cellOrderArray[x].innerHTML;
+				cellOrderArray[x].innerHTML = cellOrderArray[i].innerHTML;
+				cellOrderArray[i].innerHTML = temp;
+			}
+			else{}
+		}
+	}
 }
 
 $(document).ready(function(){
@@ -80,6 +107,7 @@ $(document).ready(function(){
 		$(".timeUnitContainer").toggle();
 	}
 );
+//allows uers to open and close the "add event" menu
 	$("#addEventButton").click(function(){
 		$(".addEventContainer").toggle();
 	}
