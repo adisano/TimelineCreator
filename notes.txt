@@ -1,7 +1,0 @@
-Questions for the UI developer:
->does it work?
->does it look good?
->>in multiple devices and browsers?
->can it scale?
->is the user experience good
->can other people read the code
