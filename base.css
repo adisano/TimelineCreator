@@ -5,12 +5,27 @@
 
 .timeUnitContainer {
 	display:none;
+	margin:15px;
 }
 
 .addEventContainer {
 	display:none;
+	margin:15px;
+}
+
+textarea {
+	align-self:center;
+	display:flex;
+	white-space:pre-wrap;
+	width:auto;
 }
 
 td {
-	text-align: center;
+	text-align:center;
+}
+
+.btn-primary {
+	align-self:center;
+	display:flex;
+	width:45%;
 }

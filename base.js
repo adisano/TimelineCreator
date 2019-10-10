@@ -1,5 +1,6 @@
 //allow user to set a custom unit of time
 var setTimeUnit = function(timeUnit){
+	/* NOTE: REMOVE
 	//get a list of all columns with the col-timeline classname
 	var columns = document.getElementsByClassName("col-timeline");
 	//iterate through our list and assign them a new timeUnit attribute
@@ -8,9 +9,10 @@ var setTimeUnit = function(timeUnit){
 	    console.log(columns[i]);
 	    columns[i].setAttribute("data-timeUnit", timeUnit.value);
 	}
+	*/
 	//change the unit of time in the "Event Time:" textbox
 		$("#eventTimeInput").val("How many " +
-			$("#timeUnitInput").val() + "?");
+			$("#timeUnitInput").val() + "s?");
 }
 
 //checks input fields for valid input, alerts user if necessary, otherwise
@@ -40,7 +42,7 @@ var checkFields = function(eventname){
 	}
 	else
 	{
-		alert ("There has been an error! We can't figure out if this is a number or not! Since we're suspicious you may be some kind of 4th-dimensional Eldritch being, please get in contact with the creator of this program immediately and smooch her!");
+		alert ("Error: invalid number");
 	}
 }
 
@@ -52,30 +54,28 @@ var addEvent = function(eventName){
 	var row = table.insertRow(-1);
 	var cell1 = row.insertCell(0);
 	var cell2 = row.insertCell(1);
-	var cell3 = row.insertCell(2);
-	//if "Left" checked, insert event on the left column
-	if(document.getElementById("leftRightLeft").checked){
-		cellOrderArray.push(cell1);
-		//should read like: "Event Name - x Unit of Time"
-		addRow(cell1, eventName);
-	}
-	//or insert on the right
-	else if(!document.getElementById("leftRightLeft").checked){
-		cellOrderArray.push(cell3);
-		//should read like: "Event Name - x Unit of Time"
-		addRow(cell3, eventName);
-	}
 	//placeholder text
 	//indicates the center of the timeline
 	cell2.innerHTML = "o";
+	cellOrderArray.push(cell1);
+	addEventContents(cell1, eventName);
+}
+
+var addRow = function() {
+	var table = document.getElementById("table1");
+	//create a new row to contain the event
+	var row = table.insertRow(-1);
+	var cell1 = row.insertCell(0);
+	var cell2 = row.insertCell(1);
+	cell2.innerHTML = "o";
+	cellOrderArray.push(cell1);
 }
 
 var eventOrderArray = new Array();
 
-var addRow = function(cell, eventname){
+var addEventContents = function(cell, eventname){
 	cell.innerHTML = eventname.value
-	+ " - " + $("#eventTimeInput").val() + " "
-	 + $("#timeUnitInput").val();
+	+ ": " + $("#timeUnitInput").val() + " " + $("#eventTimeInput").val();
 	 eventOrderArray.push($("#eventTimeInput").val());
 	 orderEvents();
 }
@@ -86,7 +86,7 @@ var orderEvents = function(){
 	var x;
 	var temp;
 	if (eventOrderArray.length >= 2){
-		for (i = eventOrderArray.length; i > 1; i--) {
+		for (i = eventOrderArray.length; i > 0; i--) {
  			x = i - 1;
 			if (Number(eventOrderArray[i]) < Number(eventOrderArray[x])){
 				temp = eventOrderArray[x];
@@ -98,6 +98,27 @@ var orderEvents = function(){
 			}
 			else{}
 		}
+	}
+}
+
+//text generation, for the user to copy to "save" their progress
+var exportText = function(){
+	var text = "";
+	for (i = 0; i < eventOrderArray.length; i++) {
+		text += (cellOrderArray[i].innerHTML) + "\n"
+	}
+	document.getElementById("textarea").innerHTML = text.slice("\n", -1);
+}
+
+var importText = function(){
+	var textArray = document.getElementById("textarea").value.split("\n");
+	if (textArray.length > cellOrderArray.length){
+		for (i = cellOrderArray.length; i < textArray.length; i++) {
+			addRow();
+		}
+	}
+	for (i = 0; i < cellOrderArray.length; i++) {
+		cellOrderArray[i].innerHTML = textArray[i];
 	}
 }
 
@@ -113,5 +134,5 @@ $(document).ready(function(){
 	}
 );
 	$("#eventTimeInput").val($("#eventTimeInput").val() +
-		$("#timeUnitInput").val() + "?");
+		$("#timeUnitInput").val() + "s?");
 });

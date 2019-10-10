@@ -9,13 +9,12 @@
 	<body>
 	<div class="main">
 		<div class="card">
-			<div class="card-body">
 				<h4>Main</h4>
 				<button class="btn btn-sm btn-primary" id="timeUnitButton">
 					SET TIME UNIT</button>
 					<div class="timeUnitContainer">
-						<b>Unit of Time (Years/Months/etc.):</b> <input type="text"
-						 name="timeUnitText" id="timeUnitInput" value="Years">
+						<b>Unit of Time (Year/Month/etc.):</b> <input type="text"
+						 name="timeUnitText" id="timeUnitInput" value="Year">
 						 <button onclick="setTimeUnit(timeUnitInput)"
 						 	id="timeUnitSubmit">Set</button>
 					</div>
@@ -27,15 +26,12 @@
 						<b>Event Time:</b> <input type="text" name="eventTimeAmount"
 							 id="eventTimeInput" value="How many ">
 						<br>
-						<b>Where to place the event?</b>
-						<br>
-						<input type="radio" name="leftRight" id="leftRightLeft" value="left">
-						Left Column<br>
-						<input type="radio" name="leftRight" value="right">Right Column<br>
-						<br>
 						<button onclick="checkFields(eventNameInput)" id="addEventSubmit">Add</button>
 					</div>
-			</div>
+					<textarea id="textarea" rows="5" cols="50">Press the "export" button to generate a text version of your timeline which you can save to a text file on your computer, or paste a text version of your timeline to import your progress!
+					</textarea>
+					<button onclick="exportText()">Export</button>
+					<button onclick="importText()">Import</button>
 		</div>
 		<br />
 		<div class="row" id="timeline">
@@ -45,7 +41,6 @@
 					<td class="col1 col-timeline" id="col-left" data-timeUnit="Years"
 					data-rowAmount="1"></td>
 					<td class="col2" style="text-align:center;"></td>
-					<td class="col3 col-timeline" id="col-right" data-timeUnit="Years"></td>
 				</tr>
 		</div>
 	</div>
