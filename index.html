@@ -1,47 +1,65 @@
 <!doctype html>
 <html>
 	<head>
-		<title>Project</title>
+		<title>Timeline Creator Utility</title>
 		<meta charset="utf-8" />
-		<link rel="stylesheet" href="base.css">
-		<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="scss/custom.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
 	<body>
-	<div class="main">
-		<div class="card">
-				<h4>Main</h4>
-				<button class="btn btn-sm btn-primary" id="timeUnitButton">
-					SET TIME UNIT</button>
-					<div class="timeUnitContainer">
-						<b>Unit of Time (Year/Month/etc.):</b> <input type="text"
-						 name="timeUnitText" id="timeUnitInput" value="Year">
-						 <button onclick="setTimeUnit(timeUnitInput)"
-						 	id="timeUnitSubmit">Set</button>
-					</div>
-					<button class="btn btn-sm btn-primary" id="addEventButton">
-					ADD EVENT</button>
-					<div class="addEventContainer">
-						<b>Event Name:</b> <input type="text" name="eventName" id="eventNameInput">
-						<br>
-						<b>Event Time:</b> <input type="text" name="eventTimeAmount"
-							 id="eventTimeInput" value="How many ">
-						<br>
-						<button onclick="checkFields(eventNameInput)" id="addEventSubmit">Add</button>
-					</div>
-					<textarea id="textarea" rows="5" cols="50">Press the "export" button to generate a text version of your timeline which you can save to a text file on your computer, or paste a text version of your timeline to import your progress!
-					</textarea>
-					<button onclick="exportText()">Export</button>
-					<button onclick="importText()">Import</button>
+	<div class="row">
+		<div class="column col-left">
+			<div class="main">
+				<div class="card">
+						<h4>Timeline Creator Utility</h4>
+						<div class="card">
+						<button class="btn btn-sm btn-primary accordion" id="timeUnitButton">
+							Set Time Unit</button>
+							<div class="animated-panel">
+								<div class="card">
+								<b>Unit of Time (Year/Month/etc.):</b> <input type="text"
+								 name="timeUnitText" id="timeUnitInput" value="Year">
+								 <button class="btn btn-sm btn-primary" onclick="setTimeUnit(timeUnitInput)"
+								 	id="timeUnitSubmit" style="margin: 5px;">Set</button>
+								</div>
+							</div>
+							</div>
+							<div class="card">
+							<button class="btn btn-sm btn-primary accordion" id="addEventButton">
+							Add Event</button>
+							<div class="animated-panel">
+								<div class="card">
+								<b>Event Name:</b> <input type="text" name="eventName" id="eventNameInput">
+								<b>Event Date:</b> <input type="text" name="eventTimeAmount"
+									 id="eventTimeInput" value="How many ">
+								<button class="btn btn-sm btn-primary"
+								onclick="checkFields(eventNameInput)" id="addEventSubmit"
+								style="margin: 5px;">Add</button>
+							</div>
+							</div>
+							</div>
+							<textarea id="textarea" rows="5" cols="50">Press the "export" button to generate a text version of your timeline which you can save to a text file on your computer, or paste a text version of your timeline to import your progress!
+							</textarea>
+						<div class="card">
+							<button class="btn btn-sm btn-primary" onclick="exportText()">Export</button>
+						</div>
+						<div class="card">
+							<button class="btn btn-sm btn-primary" onclick="importText()">Import</button>
+						</div>
+				</div>
+			</div>
 		</div>
 		<br />
-		<div class="row" id="timeline">
-			<table class="table table-bordered" style="border-collapse:collapse;"
-			id ="table1">
-				<tr class="row1">
-					<td class="col1 col-timeline" id="col-left" data-timeUnit="Years"
-					data-rowAmount="1"></td>
-					<td class="col2" style="text-align:center;"></td>
-				</tr>
+		<div class="column col-right">
+			<div class="row" id="timeline">
+				<table class="table table-bordered"
+				id ="table1">
+					<tr class="row1">
+						<td class="col1 col-timeline" data-timeUnit="Years"
+						data-rowAmount="1"></td>
+						<td class="col2" style="text-align:center;"></td>
+					</tr>
+			</div>
 		</div>
 	</div>
     <script src="jquery.js"></script>
