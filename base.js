@@ -1,15 +1,5 @@
 //allow user to set a custom unit of time
 var setTimeUnit = function(timeUnit){
-	/* NOTE: REMOVE
-	//get a list of all columns with the col-timeline classname
-	var columns = document.getElementsByClassName("col-timeline");
-	//iterate through our list and assign them a new timeUnit attribute
-	//based on user input
-		for (var i = 0; i < columns.length; i++) {
-	    console.log(columns[i]);
-	    columns[i].setAttribute("data-timeUnit", timeUnit.value);
-	}
-	*/
 	//change the unit of time in the "Event Time:" textbox
 		$("#eventTimeInput").val("How many " +
 			$("#timeUnitInput").val() + "s?");
@@ -46,7 +36,8 @@ var checkFields = function(eventname){
 	}
 }
 
-var cellOrderArray = new Array();
+var dateArray = new Array();
+var cellArray = new Array();
 
 var addEvent = function(eventName){
 	var table = document.getElementById("table1");
@@ -54,72 +45,77 @@ var addEvent = function(eventName){
 	var row = table.insertRow(-1);
 	var cell1 = row.insertCell(0);
 	var cell2 = row.insertCell(1);
+	//create containers for the event delete button, name, date, description, and
+	//description accordion button
+	var div0 = document.createElement("div");
+	var div1 = document.createElement("div");
+	var div2 = document.createElement("div");
+	var div3 = document.createElement("div");
+	var div4 = document.createElement("div");
+	cell1.appendChild(div0);
+	cell1.appendChild(div1);
+	cell1.appendChild(div2);
+	cell1.appendChild(div3);
+	cell1.appendChild(div4);
+
+	cellArray.push(cell1);
 	//placeholder text
 	//indicates the center of the timeline
 	cell2.innerHTML = "o";
-	cellOrderArray.push(cell1);
-	addEventContents(cell1, eventName);
+	addEventContents(cell1, cell2, eventName);
 }
 
-var addRow = function() {
-	var table = document.getElementById("table1");
-	//create a new row to contain the event
-	var row = table.insertRow(-1);
-	var cell1 = row.insertCell(0);
-	var cell2 = row.insertCell(1);
-	cell2.innerHTML = "o";
-	cellOrderArray.push(cell1);
+var addEventContents = function(cell1, cell2, eventname){
+	//event deletion button
+	var eventDelete = document.createElement("button");
+	cell1.childNodes[0].appendChild(eventDelete);
+	cell1.childNodes[0].childNodes[0].addEventListener("click", function(){
+		this.parentNode.parentNode.parentNode.remove();
+	});
+	//time/date container
+	cell1.childNodes[1].innerHTML = $("#timeUnitInput").val() + " " + $("#eventTimeInput").val();
+	//event name container
+	cell1.childNodes[2].innerHTML = eventname.value;
+	 dateArray.push($("#eventTimeInput").val());
+	 if (dateArray.length > 1){
+	 orderEvents(eventDelete);
+	 }
+	 else{}
 }
 
-var eventOrderArray = new Array();
-
-var addEventContents = function(cell, eventname){
-	cell.innerHTML = eventname.value
-	+ ": " + $("#timeUnitInput").val() + " " + $("#eventTimeInput").val();
-	 eventOrderArray.push($("#eventTimeInput").val());
-	 orderEvents();
-}
-
-//re-orders event text in ascending order based on the eventTimeInput value
+//re-orders event text in ascending order
 var orderEvents = function(){
-	var i;
 	var x;
-	var temp;
-	if (eventOrderArray.length >= 2){
-		for (i = eventOrderArray.length; i > 0; i--) {
- 			x = i - 1;
-			if (Number(eventOrderArray[i]) < Number(eventOrderArray[x])){
-				temp = eventOrderArray[x];
-				eventOrderArray[x] = eventOrderArray[i];
-				eventOrderArray[i] = temp;
-				temp = cellOrderArray[x].innerHTML;
-				cellOrderArray[x].innerHTML = cellOrderArray[i].innerHTML;
-				cellOrderArray[i].innerHTML = temp;
+	var y;
+	for (i = dateArray.length; i > 1; i--){
+		x = i - 1;
+		y = i - 2;
+		if (Number(dateArray[x]) < Number(dateArray[y])){
+			for(z = 0; z <= 4; z++){
+				swapNodes(cellArray[x].childNodes[z], cellArray[y].childNodes[z]);
+				swapArray(dateArray[x], dateArray[y]);
 			}
-			else{}
 		}
+		else{}
 	}
 }
 
-//text generation, for the user to copy to "save" their progress
-var exportText = function(){
-	var text = "";
-	for (i = 0; i < eventOrderArray.length; i++) {
-		text += (cellOrderArray[i].innerHTML) + "\n"
-	}
-	document.getElementById("textarea").innerHTML = text.slice("\n", -1);
+var swapNodes = function(node1, node2){
+// create marker element and insert it where obj1 is
+var temp = document.createElement("div");
+node1.parentNode.insertBefore(temp, node1);
+// move obj1 to right before obj2
+node2.parentNode.insertBefore(node1, node2);
+// move obj2 to right before where obj1 used to be
+temp.parentNode.insertBefore(node2, temp);
+// remove temporary marker node
+temp.parentNode.removeChild(temp);
 }
 
-var importText = function(){
-	var textArray = document.getElementById("textarea").value.split("\n");
-	if (textArray.length > cellOrderArray.length){
-		for (i = cellOrderArray.length; i < textArray.length; i++) {
-			addRow();
-		}
-	}
-	for (i = 0; i < cellOrderArray.length; i++) {
-		cellOrderArray[i].innerHTML = textArray[i];
-	}
+var swapArray = function(arr1, arr2){
+var temp = arr1;
+arr1 = arr2;
+arr2 = temp;
 }
 
 //accordion animations animated-panel
