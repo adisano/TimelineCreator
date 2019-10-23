@@ -78,7 +78,7 @@ var addEventContents = function(cell1, cell2, eventname){
 	cell1.childNodes[2].innerHTML = eventname.value;
 	 dateArray.push($("#eventTimeInput").val());
 	 if (dateArray.length > 1){
-	 orderEvents(eventDelete);
+	 orderEvents();
 	 }
 	 else{}
 }
@@ -93,8 +93,8 @@ var orderEvents = function(){
 		if (Number(dateArray[x]) < Number(dateArray[y])){
 			for(z = 0; z <= 4; z++){
 				swapNodes(cellArray[x].childNodes[z], cellArray[y].childNodes[z]);
-				swapArray(dateArray[x], dateArray[y]);
 			}
+			swapArray(x, y);
 		}
 		else{}
 	}
@@ -112,15 +112,13 @@ temp.parentNode.insertBefore(node2, temp);
 temp.parentNode.removeChild(temp);
 }
 
-var swapArray = function(arr1, arr2){
-var temp = arr1;
-arr1 = arr2;
-arr2 = temp;
+var swapArray = function(x, y){
+var temp = dateArray[x];
+dateArray[x] = dateArray[y];
+dateArray[y] = temp;
 }
 
 //accordion animations animated-panel
-
-
 var acc = document.getElementsByClassName("accordion");
 var a;
 
