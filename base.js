@@ -1,3 +1,6 @@
+var dateArray = new Array();
+var cellArray = new Array();
+
 //allow user to set a custom unit of time
 var setTimeUnit = function(timeUnit){
 	//change the unit of time in the "Event Time:" textbox
@@ -36,8 +39,6 @@ var checkFields = function(eventname){
 	}
 }
 
-var dateArray = new Array();
-var cellArray = new Array();
 
 var addEvent = function(eventName){
 	var table = document.getElementById("table1");
@@ -70,6 +71,9 @@ var addEventContents = function(cell1, cell2, eventname){
 	var eventDelete = document.createElement("button");
 	cell1.childNodes[0].appendChild(eventDelete);
 	cell1.childNodes[0].childNodes[0].addEventListener("click", function(){
+		var index = cellArray.indexOf(this.parentNode.parentNode);
+		cellArray.splice(index, 1);
+		dateArray.splice(index, 1);
 		this.parentNode.parentNode.parentNode.remove();
 	});
 	//time/date container
@@ -87,35 +91,39 @@ var addEventContents = function(cell1, cell2, eventname){
 var orderEvents = function(){
 	var x;
 	var y;
+	//iterate through dateArray from end to beginning
 	for (i = dateArray.length; i > 1; i--){
 		x = i - 1;
 		y = i - 2;
 		if (Number(dateArray[x]) < Number(dateArray[y])){
+			//repeat once for every child node you want to swap between cells
+			//NOTE: i can fix this number so it's not hard-coded
 			for(z = 0; z <= 4; z++){
-				swapNodes(cellArray[x].childNodes[z], cellArray[y].childNodes[z]);
+				var nodeType = "div";
+				swapNodes(cellArray[x].childNodes[z], cellArray[y].childNodes[z], nodeType);
 			}
-			swapArray(x, y);
+			swapArray(x, y, dateArray);
 		}
 		else{}
 	}
 }
 
-var swapNodes = function(node1, node2){
-// create marker element and insert it where obj1 is
-var temp = document.createElement("div");
-node1.parentNode.insertBefore(temp, node1);
-// move obj1 to right before obj2
-node2.parentNode.insertBefore(node1, node2);
-// move obj2 to right before where obj1 used to be
-temp.parentNode.insertBefore(node2, temp);
-// remove temporary marker node
-temp.parentNode.removeChild(temp);
+var swapNodes = function(node1, node2, nodetype){
+	// create marker element and insert it where obj1 is
+	var temp = document.createElement(nodetype);
+	node1.parentNode.insertBefore(temp, node1);
+	// move obj1 to right before obj2
+	node2.parentNode.insertBefore(node1, node2);
+	// move obj2 to right before where obj1 used to be
+	temp.parentNode.insertBefore(node2, temp);
+	// remove temporary marker node
+	temp.parentNode.removeChild(temp);
 }
 
-var swapArray = function(x, y){
-var temp = dateArray[x];
-dateArray[x] = dateArray[y];
-dateArray[y] = temp;
+var swapArray = function(x, y, array){
+	var temp = array[x];
+	array[x] = array[y];
+	array[y] = temp;
 }
 
 //accordion animations animated-panel
