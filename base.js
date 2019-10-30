@@ -68,23 +68,55 @@ var addEvent = function(eventName){
 
 var addEventContents = function(cell1, cell2, eventname){
 	//event deletion button
-	var eventDelete = document.createElement("button");
-	cell1.childNodes[0].appendChild(eventDelete);
-	cell1.childNodes[0].childNodes[0].addEventListener("click", function(){
-		var index = cellArray.indexOf(this.parentNode.parentNode);
-		cellArray.splice(index, 1);
-		dateArray.splice(index, 1);
-		this.parentNode.parentNode.parentNode.remove();
-	});
+	createDeleteButton(cell1);
 	//time/date container
 	cell1.childNodes[1].innerHTML = $("#timeUnitInput").val() + " " + $("#eventTimeInput").val();
 	//event name container
-	cell1.childNodes[2].innerHTML = eventname.value;
+	var div = cell1.childNodes[2];
+	div.innerHTML = eventname.value;
+	createEditBox(div);
 	 dateArray.push($("#eventTimeInput").val());
 	 if (dateArray.length > 1){
 	 orderEvents();
 	 }
 	 else{}
+}
+
+var createDeleteButton = function(cell){
+	var eventDelete = document.createElement("button");
+	cell.childNodes[0].appendChild(eventDelete);
+	eventDelete.addEventListener("click", function(){
+		var index = cellArray.indexOf(this.parentNode.parentNode);
+		cellArray.splice(index, 1);
+		dateArray.splice(index, 1);
+		this.parentNode.parentNode.parentNode.remove();
+	});
+}
+
+var createEditBox = function(div){
+	div.addEventListener("click", function(){
+		var content = div.innerHTML;
+		var txt = document.createElement("INPUT");
+		txt.setAttribute("type", "text");
+		txt.setAttribute("placeholder", div.innerHTML);
+		var parent = div.parentNode;
+		parent.replaceChild(txt, div);
+		createSubmitButton(txt, parent);
+	});
+}
+
+var createSubmitButton = function(txt, parent){
+	var submitTxt = document.createElement("button");
+	parent.appendChild(submitTxt);
+	submitTxt.addEventListener("click", function(){
+		if (txt.value != ""){
+		var div = document.createElement("div");
+		createEditBox(div);
+		div.innerHTML = txt.value;
+		parent.replaceChild(div, txt);
+		this.remove();
+		}
+	})
 }
 
 //re-orders event text in ascending order
