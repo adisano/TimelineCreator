@@ -84,6 +84,8 @@ var addEventContents = function(cell1, cell2, eventname){
 
 var createDeleteButton = function(cell){
 	var eventDelete = document.createElement("button");
+	eventDelete.classList.add("btn", "btn-small", "btn-primary");
+	eventDelete.innerHTML = "Delete";
 	cell.childNodes[0].appendChild(eventDelete);
 	eventDelete.addEventListener("click", function(){
 		var index = cellArray.indexOf(this.parentNode.parentNode);
@@ -107,6 +109,8 @@ var createEditBox = function(div){
 
 var createSubmitButton = function(txt, parent){
 	var submitTxt = document.createElement("button");
+	submitTxt.classList.add("btn", "btn-small", "btn-primary");
+	submitTxt.innerHTML = "Submit";
 	parent.appendChild(submitTxt);
 	submitTxt.addEventListener("click", function(){
 		if (txt.value != ""){
