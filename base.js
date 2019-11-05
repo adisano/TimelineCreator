@@ -71,10 +71,12 @@ var addEventContents = function(cell1, cell2, eventname){
 	createDeleteButton(cell1);
 	//time/date container
 	cell1.childNodes[1].innerHTML = $("#timeUnitInput").val() + " " + $("#eventTimeInput").val();
+	var div = cell1.childNodes[1];
+	createEditListener(div);
 	//event name container
-	var div = cell1.childNodes[2];
+	div = cell1.childNodes[2];
 	div.innerHTML = eventname.value;
-	createEditBox(div);
+	createEditListener(div);
 	 dateArray.push($("#eventTimeInput").val());
 	 if (dateArray.length > 1){
 	 orderEvents();
@@ -95,29 +97,28 @@ var createDeleteButton = function(cell){
 	});
 }
 
-var createEditBox = function(div){
+var createEditListener = function(div){
 	div.addEventListener("click", function(){
-		var content = div.innerHTML;
-		var txt = document.createElement("INPUT");
-		txt.setAttribute("type", "text");
-		txt.setAttribute("placeholder", div.innerHTML);
+		var input = document.createElement("INPUT");
+		input.setAttribute("type", "text");
+		input.setAttribute("placeholder", div.innerHTML);
 		var parent = div.parentNode;
-		parent.replaceChild(txt, div);
-		createSubmitButton(txt, parent);
+		parent.replaceChild(input, div);
+		createSubmitButton(input, parent);
 	});
 }
 
-var createSubmitButton = function(txt, parent){
-	var submitTxt = document.createElement("button");
-	submitTxt.classList.add("btn", "btn-small", "btn-primary");
-	submitTxt.innerHTML = "Submit";
-	parent.appendChild(submitTxt);
-	submitTxt.addEventListener("click", function(){
-		if (txt.value != ""){
+var createSubmitButton = function(input, parent){
+	var submit = document.createElement("button");
+	submit.classList.add("btn", "btn-small", "btn-primary");
+	submit.innerHTML = "Submit";
+	parent.appendChild(submit);
+	submit.addEventListener("click", function(){
+		if (input.value != ""){
 		var div = document.createElement("div");
-		createEditBox(div);
-		div.innerHTML = txt.value;
-		parent.replaceChild(div, txt);
+		createEditListener(div);
+		div.innerHTML = input.value;
+		parent.replaceChild(div, input);
 		this.remove();
 		}
 	})
